@@ -1,0 +1,26 @@
+{% from "_includes/forms" import textField, lightswitchField %}
+
+{{ textField({
+    label: 'Vendor'|t('commerce'),
+    id: 'vendor',
+    class: 'ltr',
+    name: 'vendor',
+    value: gateway.vendor,
+    errors: gateway.getErrors('vendor')
+}) }}
+
+ {{ lightswitchField({
+     label: "Test mode?"|t('commerce'),
+     name: 'testMode',
+     on: gateway.testMode,
+     errors: gateway.getErrors('testMode'),
+ }) }}
+
+ {{ textField({
+     label: "Referrer ID"|t('commerce'),
+     id: 'referrerId',
+     class: 'ltr',
+     name: 'referrerId',
+     value: gateway.referrerId,
+     errors: gateway.getErrors('referrerId')
+ }) }}
