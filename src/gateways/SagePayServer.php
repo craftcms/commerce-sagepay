@@ -3,9 +3,16 @@
 namespace craft\commerce\sagepay\gateways;
 
 use Craft;
+use craft\commerce\models\payments\BasePaymentForm;
+use craft\commerce\Plugin as Commerce;
 use craft\commerce\omnipay\base\OffsiteGateway;
+use craft\commerce\records\Transaction as TransactionRecord;
+use craft\helpers\UrlHelper;
+use craft\web\Response as WebResponse;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Omnipay;
+use Omnipay\SagePay\Message\ServerNotifyRequest;
+use Omnipay\SagePay\Message\ServerNotifyResponse;
 use Omnipay\SagePay\ServerGateway as Gateway;
 
 /**
@@ -55,6 +62,82 @@ class SagePayServer extends OffsiteGateway
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/gatewaySettings', ['gateway' => $this]);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function processWebHook(): WebResponse
+    {
+        $response = Craft::$app->getResponse();
+
+        $transactionHash = Craft::$app->getRequest()->getParam('commerceTransactionHash');
+        $transaction = Commerce::getInstance()->getTransactions()->getTransactionByHash($transactionHash);
+
+        $childTransaction = Commerce::getInstance()->getTransactions()->createTransaction(null, $transaction);
+        $childTransaction->type = $transaction->type;
+
+        if (!$transaction) {
+            Craft::warning('Transaction with the hash “'.$transactionHash.'” not found.', 'sagepay');
+            $response->data = 'ok';
+
+            return $response;
+        }
+
+        /** @var Gateway $gateway */
+        $gateway = $this->gateway();
+
+        /** @var ServerNotifyRequest $request */
+        $request = $gateway->acceptNotification();
+        $request->setTransactionReference($transaction->reference);
+
+        /** @var ServerNotifyResponse $gatewayResponse */
+        $gatewayResponse = $request->send();
+
+        if (!$request->isValid()) {
+            $url = UrlHelper::siteUrl($transaction->getOrder()->cancelUrl);
+            Craft::warning('Notification request is not valid: '.json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
+            $gatewayResponse->invalid($url, 'Invalid signature');
+            $response->data = 'ok';
+
+            return $response;
+        }
+
+        $request->getData();
+
+        $status = $request->getTransactionStatus();
+
+        switch ($status) {
+            case $request::STATUS_COMPLETED:
+                $childTransaction->status = TransactionRecord::STATUS_SUCCESS;
+                break;
+            case $request::STATUS_PENDING:
+                $childTransaction->status = TransactionRecord::STATUS_PENDING;
+                break;
+            case $request::STATUS_FAILED:
+                $childTransaction->status = TransactionRecord::STATUS_FAILED;
+                break;
+        }
+
+        $childTransaction->response = $gatewayResponse->getData();
+        $childTransaction->code = $gatewayResponse->getCode();
+        $childTransaction->reference = $gatewayResponse->getTransactionReference();
+        $childTransaction->message = $gatewayResponse->getMessage();
+        Commerce::getInstance()->getTransactions()->saveTransaction($childTransaction);
+
+        $url = UrlHelper::actionUrl('commerce/payments/complete-payment', ['commerceTransactionId' => $childTransaction->id, 'commerceTransactionHash' => $childTransaction->hash]);
+
+        $gatewayResponse->confirm($url);
+        $response->data = 'ok';
+
+        return $response;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function supportsWebhooks(): bool
+    {
+        return true;
+    }
 
     // Protected Methods
     // =========================================================================

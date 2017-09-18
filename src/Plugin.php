@@ -29,7 +29,7 @@ class Plugin extends \craft\base\Plugin
 
         Event::on(Gateways::class, Gateways::EVENT_REGISTER_GATEWAY_TYPES,  function(RegisterComponentTypesEvent $event) {
             $event->types[] = SagePayDirect::class;
-            //$event->types[] = SagePayServer::class;
+            $event->types[] = SagePayServer::class;
         });
     }
 }
