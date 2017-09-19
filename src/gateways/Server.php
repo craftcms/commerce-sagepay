@@ -3,7 +3,6 @@
 namespace craft\commerce\sagepay\gateways;
 
 use Craft;
-use craft\commerce\models\payments\BasePaymentForm;
 use craft\commerce\Plugin as Commerce;
 use craft\commerce\omnipay\base\OffsiteGateway;
 use craft\commerce\records\Transaction as TransactionRecord;
@@ -21,7 +20,7 @@ use Omnipay\SagePay\ServerGateway as Gateway;
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
  */
-class SagePayServer extends OffsiteGateway
+class Server extends OffsiteGateway
 {
 
     // Properties

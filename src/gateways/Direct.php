@@ -14,7 +14,7 @@ use Omnipay\SagePay\DirectGateway as Gateway;
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
  */
-class SagePayDirect extends CreditCardGateway
+class Direct extends CreditCardGateway
 {
     // Properties
     // =========================================================================

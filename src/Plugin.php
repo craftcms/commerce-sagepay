@@ -2,8 +2,8 @@
 
 namespace craft\commerce\sagepay;
 
-use craft\commerce\sagepay\gateways\SagePayServer;
-use craft\commerce\sagepay\gateways\SagePayDirect;
+use craft\commerce\sagepay\gateways\Server;
+use craft\commerce\sagepay\gateways\Direct;
 use craft\commerce\services\Gateways;
 use craft\events\RegisterComponentTypesEvent;
 use yii\base\Event;
@@ -28,8 +28,8 @@ class Plugin extends \craft\base\Plugin
         parent::init();
 
         Event::on(Gateways::class, Gateways::EVENT_REGISTER_GATEWAY_TYPES,  function(RegisterComponentTypesEvent $event) {
-            $event->types[] = SagePayDirect::class;
-            $event->types[] = SagePayServer::class;
+            $event->types[] = Direct::class;
+            $event->types[] = Server::class;
         });
     }
 }

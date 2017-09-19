@@ -8,8 +8,8 @@
 namespace craft\commerce\sagepay\migrations;
 
 use Craft;
-use craft\commerce\paypal\gateways\SagePayDirect;
-use craft\commerce\paypal\gateways\SagePayServer;
+use craft\commerce\sagepay\gateways\Direct;
+use craft\commerce\sagepay\gateways\Server;
 use craft\db\Migration;
 use craft\db\Query;
 
@@ -64,7 +64,7 @@ class Install extends Migration
         foreach ($gateways as $gateway) {
 
             $values = [
-                'type' => SagePayDirect::class,
+                'type' => Direct::class,
             ];
 
             $dbConnection->createCommand()
@@ -83,7 +83,7 @@ class Install extends Migration
         foreach ($gateways as $gateway) {
 
             $values = [
-                'type' => SagePayServer::class,
+                'type' => Server::class,
             ];
 
             $dbConnection->createCommand()
