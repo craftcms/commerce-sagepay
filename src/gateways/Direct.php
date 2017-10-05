@@ -9,7 +9,7 @@ use Omnipay\Omnipay;
 use Omnipay\SagePay\DirectGateway as Gateway;
 
 /**
- * PayPalPro represents PayPalPro gateway
+ * Direct represents SagePay Direct gateway
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0

@@ -15,7 +15,7 @@ use Omnipay\SagePay\Message\ServerNotifyResponse;
 use Omnipay\SagePay\ServerGateway as Gateway;
 
 /**
- * Stripe represents the Stripe gateway
+ * Server represents the SagePay Server gateway
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
