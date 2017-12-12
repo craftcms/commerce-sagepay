@@ -133,6 +133,14 @@ class Server extends OffsiteGateway
     /**
      * @inheritdoc
      */
+    public function supportsPaymentSources(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function supportsWebhooks(): bool
     {
         return true;

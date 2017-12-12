@@ -53,6 +53,14 @@ class Direct extends CreditCardGateway
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/gatewaySettings', ['gateway' => $this]);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function supportsPaymentSources(): bool
+    {
+        return false;
+    }
+
     // Protected Methods
     // =========================================================================
 
