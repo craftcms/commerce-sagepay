@@ -3,10 +3,14 @@
 namespace craft\commerce\sagepay\gateways;
 
 use Craft;
+use craft\commerce\base\RequestResponseInterface;
+use craft\commerce\models\Transaction;
+use craft\commerce\records\Transaction as TransactionRecord;
 use craft\commerce\omnipay\base\CreditCardGateway;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Omnipay;
 use Omnipay\SagePay\DirectGateway as Gateway;
+use yii\base\NotSupportedException;
 
 /**
  * Direct represents SagePay Direct gateway
@@ -51,6 +55,29 @@ class Direct extends CreditCardGateway
     public function getSettingsHtml()
     {
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/gatewaySettings', ['gateway' => $this]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function refund(Transaction $transaction): RequestResponseInterface
+    {
+        if (!$this->supportsRefund()) {
+            throw new NotSupportedException(Craft::t('commerce', 'Refunding is not supported by this gateway'));
+        }
+
+        $request = $this->createRequest($transaction);
+        $parent= $transaction->getParent();
+
+        if ($parent->type == TransactionRecord::TYPE_CAPTURE) {
+            $reference = $parent->getParent()->reference;
+        } else {
+            $reference = $transaction->reference;
+        }
+
+        $refundRequest = $this->prepareRefundRequest($request, $reference);
+
+        return $this->performRequest($refundRequest, $transaction);
     }
 
     /**
