@@ -3,6 +3,8 @@
 namespace craft\commerce\sagepay\gateways;
 
 use Craft;
+use craft\commerce\base\RequestResponseInterface;
+use craft\commerce\models\Transaction;
 use craft\commerce\Plugin as Commerce;
 use craft\commerce\omnipay\base\OffsiteGateway;
 use craft\commerce\records\Transaction as TransactionRecord;
@@ -13,6 +15,7 @@ use Omnipay\Omnipay;
 use Omnipay\SagePay\Message\ServerNotifyRequest;
 use Omnipay\SagePay\Message\ServerNotifyResponse;
 use Omnipay\SagePay\ServerGateway as Gateway;
+use yii\base\NotSupportedException;
 
 /**
  * Server represents the SagePay Server gateway
@@ -59,6 +62,29 @@ class Server extends OffsiteGateway
     public function getSettingsHtml()
     {
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/gatewaySettings', ['gateway' => $this]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function refund(Transaction $transaction): RequestResponseInterface
+    {
+        if (!$this->supportsRefund()) {
+            throw new NotSupportedException(Craft::t('commerce', 'Refunding is not supported by this gateway'));
+        }
+
+        $request = $this->createRequest($transaction);
+        $parent= $transaction->getParent();
+
+        if ($parent->type == TransactionRecord::TYPE_CAPTURE) {
+            $reference = $parent->getParent()->reference;
+        } else {
+            $reference = $transaction->reference;
+        }
+
+        $refundRequest = $this->prepareRefundRequest($request, $reference);
+
+        return $this->performRequest($refundRequest, $transaction);
     }
 
     /**
