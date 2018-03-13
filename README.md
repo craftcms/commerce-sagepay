@@ -1,4 +1,4 @@
-SagePay payment gateways for Craft Commerce
+SagePay payment gateway plugin for Craft Commerce 2
 =======================
 
 This plugin provides [SagePay](https://www.sagepay.co.uk/) integrations for [Craft Commerce](https://craftcommerce.com/).
@@ -7,7 +7,7 @@ It provides both SagePay Direct and SagePay Server gateways.
 
 ## Requirements
 
-This plugin requires Craft Commerce 2.0.1-alpha.4 or later.
+This plugin requires Craft Commerce 2.0.0-alpha.5 or later.
 
 
 ## Installation
