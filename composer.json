@@ -35,7 +35,7 @@
     }
   },
   "extra": {
-    "name": "SagePay",
+    "name": "SagePay for Craft Commerce",
     "handle": "commerce-sagepay",
     "changelogUrl": "https://raw.githubusercontent.com/craftcms/commerce-sagepay/master/CHANGELOG.md",
     "downloadUrl": "https://github.com/craftcms/commerce-sagepay/archive/master.zip"
