@@ -44,6 +44,10 @@ class Server extends OffsiteGateway
      */
     public $referrerId;
 
+    /**
+     * @var bool Whether cart information should be sent to the payment gateway
+     */
+    public $sendCartInfo = false;
 
     // Public Methods
     // =========================================================================
