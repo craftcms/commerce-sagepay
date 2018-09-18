@@ -43,6 +43,13 @@ class Direct extends CreditCardGateway
      */
     public $sendCartInfo = false;
 
+    /**
+     * SagePay supports two formats, Basket and BasketXML. Basket is legacy format. Read more here:
+     * https://github.com/thephpleague/omnipay-sagepay#basket-format
+     * @var bool
+     */
+    public $useOldBasketFormat = false;
+
     // Public Methods
     // =========================================================================
 
@@ -107,6 +114,7 @@ class Direct extends CreditCardGateway
         $gateway->setVendor($this->vendor);
         $gateway->setTestMode($this->testMode);
         $gateway->setReferrerId($this->referrerId);
+        $gateway->setUseOldBasketFormat($this->useOldBasketFormat);
 
         return $gateway;
     }
