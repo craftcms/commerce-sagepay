@@ -50,9 +50,8 @@ class Server extends OffsiteGateway
     public $sendCartInfo = false;
 
     /**
-     * SagePay supports two formats, Basket and BasketXML. Basket is legacy format. Read more here:
-     * https://github.com/thephpleague/omnipay-sagepay#basket-format
-     * @var bool
+     * @var bool Whether legacy basket format should be used.
+     * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
      */
     public $useOldBasketFormat = false;
 

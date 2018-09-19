@@ -18,17 +18,26 @@
 }) }}
 
  {{ lightswitchField({
-     label: "Test mode?"|t('commerce'),
-     name: 'testMode',
-     on: gateway.testMode,
-     errors: gateway.getErrors('testMode'),
+    label: "Test mode?"|t('commerce'),
+    name: 'testMode',
+    on: gateway.testMode,
+    errors: gateway.getErrors('testMode'),
  }) }}
 
  {{ textField({
-     label: "Referrer ID"|t('commerce'),
-     id: 'referrerId',
-     class: 'ltr',
-     name: 'referrerId',
-     value: gateway.referrerId,
-     errors: gateway.getErrors('referrerId')
+    label: "Referrer ID"|t('commerce'),
+    id: 'referrerId',
+    class: 'ltr',
+    name: 'referrerId',
+    value: gateway.referrerId,
+    errors: gateway.getErrors('referrerId')
  }) }}
+
+ {{ lightswitchField({
+    label: "Use legacy basket format?"|t('commerce'),
+    instructions: 'Whether the <a href="https://github.com/thephpleague/omnipay-sagepay#basket-format" target="_blank">legacy basket format</a> should be used.'|t('commerce'),
+    name: 'useOldBasketFormat',
+    on: gateway.useOldBasketFormat,
+    errors: gateway.getErrors('useOldBasketFormat'),
+ }) }}
+
