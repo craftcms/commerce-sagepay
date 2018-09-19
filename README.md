@@ -34,37 +34,16 @@ You must disable CSRF protection for the incoming requests, assuming it is enabl
 
 A clean example for how to go about this can be found [here](https://craftcms.stackexchange.com/a/20301/258).
 
+### Using the legacy basket format
 
-## Using Old Basket Format
+SagePay has two formats for submit basket data — `Basket` and `BasketXML`. The `Basket` is a legacy format, but is the only way to integrate with Sage 50 Accounts.
 
-SagePay has two methods to submit the basket, `Basket` and `BasketXML`.  Read more from the `thephpleague/omnipay-sagepay` docs [here](https://github.com/thephpleague/omnipay-sagepay#basket-format).
+To use the legacy format, simply turn on the appropriate setting in the gateway settings. To complete your integration with Sage 50 Accounts you can use the following event:
 
-If you need Sage 50 Accounts Integration you will need to use the Basket Format and you can read more about the integration [here](https://github.com/thephpleague/omnipay-sagepay#sage-50-accounts-software-integration).
+```php
+use \craft\commerce\omnipay\base\Gateway as BaseGateway;
 
-### Implementing Basket Format in Craft with Sage 50 Accounts Integration
-
-Create the a config file named `config/commerce-gateways.php` if you yet already don't have one and then insert the following config to enable the `Basket` format. 
-
-```
-<?php
-return [
-    '<your-sagepay-handle>' => [
-        'useOldBasketFormat' => true
-    ],
-];
-```
-
-
-To then add the Product Code for the Sage 50 Account Integration you can hook into the following event:
-
-```
-\craft\commerce\omnipay\base\Gateway::EVENT_AFTER_CREATE_ITEM_BAG
-```
-
-Like so:
-
-```
-Event::on(\craft\commerce\omnipay\base\Gateway::class, \craft\commerce\omnipay\base\Gateway::EVENT_AFTER_CREATE_ITEM_BAG, function(ItemBagEvent $itemBagEvent) {
+Event::on(BaseGateway::class, BaseGatewa::EVENT_AFTER_CREATE_ITEM_BAG, function(ItemBagEvent $itemBagEvent) {
     
     $orderLineItems = $itemBagEvent->order->getLineItems();
 
@@ -79,7 +58,7 @@ Event::on(\craft\commerce\omnipay\base\Gateway::class, \craft\commerce\omnipay\b
 
         $orderLineItem  = $orderLineItems[$key];
 
-        // We validate that the description and price are the same as we are relying upon the order
+        // Make sure that the description and price are the same as we are relying upon the order
         // of the Order Items and The OmniPay Item Bag to be the same
         if ($orderLineItem->getDescription() != $item->getDescription()) {
             return;
