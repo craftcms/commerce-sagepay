@@ -34,3 +34,45 @@ You must disable CSRF protection for the incoming requests, assuming it is enabl
 
 A clean example for how to go about this can be found [here](https://craftcms.stackexchange.com/a/20301/258).
 
+### Using the legacy basket format
+
+SagePay has two formats for submit basket data — `Basket` and `BasketXML`. The `Basket` is a legacy format, but is the only way to integrate with Sage 50 Accounts.
+
+To use the legacy format, simply turn on the appropriate setting in the gateway settings. To complete your integration with Sage 50 Accounts you can use the following event:
+
+```php
+use \craft\commerce\omnipay\base\Gateway as BaseGateway;
+
+Event::on(BaseGateway::class, BaseGatewa::EVENT_AFTER_CREATE_ITEM_BAG, function(ItemBagEvent $itemBagEvent) {
+    
+    $orderLineItems = $itemBagEvent->order->getLineItems();
+
+    /**
+     * @var $item Item
+    */
+    foreach ($itemBagEvent->items as $key => $item) {
+
+        if (!isset($orderLineItems[$key])) {
+            return;
+        }
+
+        $orderLineItem  = $orderLineItems[$key];
+
+        // Make sure that the description and price are the same as we are relying upon the order
+        // of the Order Items and The OmniPay Item Bag to be the same
+        if ($orderLineItem->getDescription() != $item->getDescription()) {
+            return;
+        }
+
+        if ($orderLineItem->price != $item->getPrice()) {
+            return;
+        }
+
+        $sku = $orderLineItem->getSku();
+
+        // Place the SKU within [] as the Product Record for the Sage 50 Accounts Integration
+        $description = '[' . $sku . ']' . $item->getDescription();
+        $item->setDescription($description);
+    }
+});
+```

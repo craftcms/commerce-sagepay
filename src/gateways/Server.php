@@ -49,6 +49,12 @@ class Server extends OffsiteGateway
      */
     public $sendCartInfo = false;
 
+    /**
+     * @var bool Whether legacy basket format should be used.
+     * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
+     */
+    public $useOldBasketFormat = false;
+
     // Public Methods
     // =========================================================================
 
@@ -190,6 +196,7 @@ class Server extends OffsiteGateway
         $gateway->setVendor($this->vendor);
         $gateway->setTestMode($this->testMode);
         $gateway->setReferrerId($this->referrerId);
+        $gateway->setUseOldBasketFormat($this->useOldBasketFormat);
 
         return $gateway;
     }
