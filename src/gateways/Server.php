@@ -4,6 +4,7 @@ namespace craft\commerce\sagepay\gateways;
 
 use Craft;
 use craft\commerce\base\RequestResponseInterface;
+use craft\commerce\models\payments\BasePaymentForm;
 use craft\commerce\models\Transaction;
 use craft\commerce\Plugin as Commerce;
 use craft\commerce\omnipay\base\OffsiteGateway;
@@ -12,6 +13,7 @@ use craft\helpers\UrlHelper;
 use craft\web\Response as WebResponse;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Omnipay;
+use Omnipay\SagePay\Message\AbstractRequest;
 use Omnipay\SagePay\Message\ServerNotifyRequest;
 use Omnipay\SagePay\Message\ServerNotifyResponse;
 use Omnipay\SagePay\ServerGateway as Gateway;
@@ -55,6 +57,11 @@ class Server extends OffsiteGateway
      */
     public $useOldBasketFormat = false;
 
+    /**
+     * @var bool Whether low profile form should be used.
+     */
+    public $useLowProfile = false;
+
     // Public Methods
     // =========================================================================
 
@@ -71,7 +78,7 @@ class Server extends OffsiteGateway
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('commerce-sagepay/gatewaySettings', ['gateway' => $this]);
+        return Craft::$app->getView()->renderTemplate('commerce-sagepay/serverGatewaySettings', ['gateway' => $this]);
     }
 
     /**
@@ -180,6 +187,12 @@ class Server extends OffsiteGateway
     public function supportsWebhooks(): bool
     {
         return true;
+    }
+
+    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null)
+    {
+        parent::populateRequest($request, $paymentForm);
+        $request['profile'] = $this->useLowProfile ? AbstractRequest::PROFILE_LOW : AbstractRequest::PROFILE_NORMAL;
     }
 
     // Protected Methods
