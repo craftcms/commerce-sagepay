@@ -1,32 +1,39 @@
-SagePay payment gateway plugin for Craft Commerce 2
-=======================
+<p align="center"><img src="./src/icon.svg" width="100" height="100" alt="Sage Pay for Craft Commerce icon"></p>
 
-This plugin provides [SagePay](https://www.sagepay.co.uk/) integrations for [Craft Commerce](https://craftcommerce.com/).
+<h1 align="center">Sage Pay for Craft Commerce</h1>
 
-It provides both SagePay Direct and SagePay Server gateways.
+This plugin provides a [Sage Pay](https://www.sagepay.co.uk/) integration for [Craft Commerce](https://craftcms.com/commerce).
 
 ## Requirements
 
 This plugin requires Craft Commerce 2.0.0-alpha.5 or later.
 
-
 ## Installation
 
-To install the plugin, follow these instructions.
+You can install this plugin from the Plugin Store or with Composer.
 
-1. Open your terminal and go to your Craft project:
+#### From the Plugin Store
 
-        cd /path/to/project
+Go to the Plugin Store in your project’s Control Panel and search for Sage Pay for Craft Commerce”. Then click on the “Install” button in its modal window.
 
-2. Then tell Composer to load the plugin:
+#### With Composer
 
-        composer require craftcms/commerce-sagepay
+Open your terminal and run the following commands:
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for SagePay.
+```bash
+# go to the project directory
+cd /path/to/my-project.test
+
+# tell Composer to load the plugin
+composer require craftcms/commerce-sagepay
+
+# tell Craft to install the plugin
+./craft install/plugin commerce-sagepay
+```
 
 ## Setup
 
-To add a SagePay payment gateway, go to Commerce → Settings → Gateways, create a new gateway, and set the gateway type to either “SagePay Direct” or “SagePay Server”.
+To add a Sage Pay payment gateway, go to Commerce → Settings → Gateways, create a new gateway, and set the gateway type to either “Sage Pay Direct” or “Sage Pay Server”.
 
 ### Disabling CSRF for webhooks.
 
@@ -36,7 +43,7 @@ A clean example for how to go about this can be found [here](https://craftcms.st
 
 ### Using the legacy basket format
 
-SagePay has two formats for submit basket data — `Basket` and `BasketXML`. The `Basket` is a legacy format, but is the only way to integrate with Sage 50 Accounts.
+Sage Pay has two formats for submit basket data — `Basket` and `BasketXML`. The `Basket` is a legacy format, but is the only way to integrate with Sage 50 Accounts.
 
 To use the legacy format, simply turn on the appropriate setting in the gateway settings. To complete your integration with Sage 50 Accounts you can use the following event:
 

@@ -1,5 +1,4 @@
-Changelog
-=========
+# Release Notes for Sage Pay for Craft Commerce
 
 ### 1.1.0 - 2018-09-20
 

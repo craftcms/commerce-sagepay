@@ -47,7 +47,7 @@ class Install extends Migration
     // =========================================================================
 
     /**
-     * Converts any old school SagePay gateways to this one
+     * Converts any old school Sage Pay gateways to this one
      *
      * @return void
      */

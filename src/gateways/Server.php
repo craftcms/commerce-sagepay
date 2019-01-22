@@ -20,7 +20,7 @@ use Omnipay\SagePay\ServerGateway as Gateway;
 use yii\base\NotSupportedException;
 
 /**
- * Server represents the SagePay Server gateway
+ * Server represents the Sage Pay Server gateway
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
@@ -70,7 +70,7 @@ class Server extends OffsiteGateway
      */
     public static function displayName(): string
     {
-        return Craft::t('commerce', 'SagePay Server');
+        return Craft::t('commerce', 'Sage Pay Server');
     }
 
     /**

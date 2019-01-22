@@ -13,7 +13,7 @@ use Omnipay\SagePay\DirectGateway as Gateway;
 use yii\base\NotSupportedException;
 
 /**
- * Direct represents SagePay Direct gateway
+ * Direct represents Sage Pay Direct gateway
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
@@ -58,7 +58,7 @@ class Direct extends CreditCardGateway
      */
     public static function displayName(): string
     {
-        return Craft::t('commerce', 'SagePay Direct');
+        return Craft::t('commerce', 'Sage Pay Direct');
     }
 
     /**

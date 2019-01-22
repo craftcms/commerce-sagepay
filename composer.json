@@ -1,10 +1,11 @@
 {
   "name": "craftcms/commerce-sagepay",
-  "description": "SagePay payment gateway plugin for Craft Commerce 2",
+  "description": "Sage Pay integration for Craft Commerce 2",
   "version": "1.1.0",
   "type": "craft-plugin",
   "keywords": [
     "sagepay",
+    "sage pay",
     "commerce",
     "craftcms",
     "omnipay",
@@ -36,9 +37,7 @@
     }
   },
   "extra": {
-    "name": "SagePay for Craft Commerce",
-    "handle": "commerce-sagepay",
-    "changelogUrl": "https://raw.githubusercontent.com/craftcms/commerce-sagepay/master/CHANGELOG.md",
-    "downloadUrl": "https://github.com/craftcms/commerce-sagepay/archive/master.zip"
+    "name": "Sage Pay for Craft Commerce",
+    "handle": "commerce-sagepay"
   }
 }
