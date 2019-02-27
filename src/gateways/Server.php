@@ -168,9 +168,9 @@ class Server extends OffsiteGateway
         $url = UrlHelper::actionUrl('commerce/payments/complete-payment', ['commerceTransactionId' => $childTransaction->id, 'commerceTransactionHash' => $childTransaction->hash]);
 
         $gatewayResponse->confirm($url);
-        $response->data = 'ok';
 
-        return $response;
+        // As of `omnipay-sagepay` version 3.2.2, the `confirm` call above starts output, so prevent Yii from erroring out by trying to send headers or anything, really.
+        exit();
     }
 
     /**
