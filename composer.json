@@ -1,7 +1,7 @@
 {
   "name": "craftcms/commerce-sagepay",
   "description": "Sage Pay integration for Craft Commerce 2",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "type": "craft-plugin",
   "keywords": [
     "sagepay",
@@ -28,8 +28,8 @@
   "require": {
     "craftcms/cms": "^3.0.0",
     "craftcms/commerce": "^2.0.0-alpha.6",
-    "craftcms/commerce-omnipay": "^1.0.0",
-    "omnipay/sagepay": "~2.6"
+    "craftcms/commerce-omnipay": "^2.0.0",
+    "omnipay/sagepay": "~3.0"
   },
   "autoload": {
     "psr-4": {
