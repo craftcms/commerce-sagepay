@@ -109,7 +109,7 @@ class Direct extends CreditCardGateway
     protected function createGateway(): AbstractGateway
     {
         /** @var Gateway $gateway */
-        $gateway = Omnipay::create($this->getGatewayClassName());
+        $gateway = static::createOmnipayGateway($this->getGatewayClassName());
 
         $gateway->setVendor($this->vendor);
         $gateway->setTestMode($this->testMode);
