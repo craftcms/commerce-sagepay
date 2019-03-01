@@ -6,7 +6,7 @@ This plugin provides a [Sage Pay](https://www.sagepay.co.uk/) integration for [C
 
 ## Requirements
 
-This plugin requires Craft Commerce 2.0.0-alpha.5 or later.
+This plugin requires Craft 3.1.5 and Craft Commerce 2.0.0 or later.
 
 ## Installation
 
@@ -34,6 +34,8 @@ composer require craftcms/commerce-sagepay
 ## Setup
 
 To add a Sage Pay payment gateway, go to Commerce → Settings → Gateways, create a new gateway, and set the gateway type to either “Sage Pay Direct” or “Sage Pay Server”.
+
+> **Tip:** Sage Pay vendor and referrer id gateway settings can be set to environment variables. See [Environmental Configuration](https://docs.craftcms.com/v3/config/environments.html) in the Craft docs to learn more about that.
 
 ### Disabling CSRF for webhooks.
 

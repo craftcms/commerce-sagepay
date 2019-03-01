@@ -206,9 +206,9 @@ class Server extends OffsiteGateway
         /** @var Gateway $gateway */
         $gateway = static::createOmnipayGateway($this->getGatewayClassName());
 
-        $gateway->setVendor($this->vendor);
+        $gateway->setVendor(Craft::parseEnv($this->vendor));
+        $gateway->setReferrerId(Craft::parseEnv($this->referrerId));
         $gateway->setTestMode($this->testMode);
-        $gateway->setReferrerId($this->referrerId);
         $gateway->setUseOldBasketFormat($this->useOldBasketFormat);
 
         return $gateway;

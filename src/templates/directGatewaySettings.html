@@ -1,4 +1,4 @@
-{% from "_includes/forms" import textField, lightswitchField %}
+{% from "_includes/forms" import textField, lightswitchField, autosuggestField %}
 
 {{ lightswitchField({
     label: "Should commerce send cart information to gateway when making transactions."|t('commerce'),
@@ -8,11 +8,12 @@
     errors: gateway.getErrors('sendCartInfo'),
 }) }}
 
-{{ textField({
+{{ autosuggestField({
     label: 'Vendor'|t('commerce'),
     id: 'vendor',
     class: 'ltr',
     name: 'vendor',
+    suggestEnvVars: true,
     value: gateway.vendor,
     errors: gateway.getErrors('vendor')
 }) }}
@@ -24,11 +25,12 @@
     errors: gateway.getErrors('testMode'),
  }) }}
 
- {{ textField({
+ {{ autosuggestField({
     label: "Referrer ID"|t('commerce'),
     id: 'referrerId',
     class: 'ltr',
     name: 'referrerId',
+    suggestEnvVars: true,
     value: gateway.referrerId,
     errors: gateway.getErrors('referrerId')
  }) }}

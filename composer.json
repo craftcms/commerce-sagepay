@@ -26,8 +26,8 @@
     "rss": "https://github.com/craftcms/commerce-sagepay/commits/master.atom"
   },
   "require": {
-    "craftcms/cms": "^3.0.0",
-    "craftcms/commerce": "^2.0.0-alpha.6",
+    "craftcms/cms": "^3.1.5",
+    "craftcms/commerce": "^2.0.0",
     "craftcms/commerce-omnipay": "^2.0.0",
     "omnipay/sagepay": "~3.0"
   },
