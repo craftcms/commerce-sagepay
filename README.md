@@ -35,7 +35,7 @@ composer require craftcms/commerce-sagepay
 
 To add a Sage Pay payment gateway, go to Commerce → Settings → Gateways, create a new gateway, and set the gateway type to either “Sage Pay Direct” or “Sage Pay Server”.
 
-> **Tip:** Sage Pay vendor and referrer id gateway settings can be set to environment variables. See [Environmental Configuration](https://docs.craftcms.com/v3/config/environments.html) in the Craft docs to learn more about that.
+> **Tip:** The Vendor and Referrer ID gateway settings can be set to environment variables. See [Environmental Configuration](https://docs.craftcms.com/v3/config/environments.html) in the Craft docs to learn more about that.
 
 ### Disabling CSRF for webhooks.
 

@@ -3,7 +3,7 @@
 ## Unreleased
 
 ### Added
-- Gateway settings can now be set to environment variables.
+- The Vendor and Referrer ID gateway settings can now be set to environment variables.
 
 ### Changed
 - SagePay for Craft Commerce now requires Craft 3.1.5 or later.
