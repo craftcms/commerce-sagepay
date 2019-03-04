@@ -1,6 +1,6 @@
 # Release Notes for Sage Pay for Craft Commerce
 
-## Unreleased
+## 2.0.0 - 2019-03-04
 
 ### Added
 - The Vendor and Referrer ID gateway settings can now be set to environment variables.
