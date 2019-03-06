@@ -37,12 +37,6 @@ To add a Sage Pay payment gateway, go to Commerce → Settings → Gateways, cre
 
 > **Tip:** The Vendor and Referrer ID gateway settings can be set to environment variables. See [Environmental Configuration](https://docs.craftcms.com/v3/config/environments.html) in the Craft docs to learn more about that.
 
-### Disabling CSRF for webhooks.
-
-You must disable CSRF protection for the incoming requests, assuming it is enabled for the site (default for Craft since 3.0).
-
-A clean example for how to go about this can be found [here](https://craftcms.stackexchange.com/a/20301/258).
-
 ### Using the legacy basket format
 
 Sage Pay has two formats for submit basket data — `Basket` and `BasketXML`. The `Basket` is a legacy format, but is the only way to integrate with Sage 50 Accounts.
