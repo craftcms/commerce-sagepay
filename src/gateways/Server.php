@@ -114,15 +114,29 @@ class Server extends OffsiteGateway
         $transactionHash = Craft::$app->getRequest()->getParam('commerceTransactionHash');
         $transaction = Commerce::getInstance()->getTransactions()->getTransactionByHash($transactionHash);
 
-        $childTransaction = Commerce::getInstance()->getTransactions()->createTransaction(null, $transaction);
-        $childTransaction->type = $transaction->type;
-
         if (!$transaction) {
-            Craft::warning('Transaction with the hash “'.$transactionHash.'” not found.', 'sagepay');
+            Craft::warning('Transaction with the hash “'.$transactionHash.'“ not found.', 'sagepay');
             $response->data = 'ok';
 
             return $response;
         }
+
+        // Check to see if a successful purchase child transaction already exist and skip out early if they do
+        $successfulPurchaseChildTransaction = TransactionRecord::find()->where([
+            'parentId' => $transaction->id,
+            'status' => TransactionRecord::STATUS_SUCCESS,
+            'type' => TransactionRecord::TYPE_PURCHASE,
+        ])->one();
+
+        if ($successfulPurchaseChildTransaction) {
+            Craft::warning('Successful child transaction for “'.$transactionHash.'“ already exists.', 'commerce');
+            $response->data = 'ok';
+
+            return $response;
+        }
+
+        $childTransaction = Commerce::getInstance()->getTransactions()->createTransaction(null, $transaction);
+        $childTransaction->type = $transaction->type;
 
         /** @var Gateway $gateway */
         $gateway = $this->gateway();

@@ -1,5 +1,10 @@
 # Release Notes for Sage Pay for Craft Commerce
 
+## Unreleased
+
+### Fixed
+- Fixed a bug where duplicate successful purchase child transactions could be recorded via the notification webhook. ([#10](https://github.com/craftcms/commerce-sagepay/issues/10))
+
 ## 2.1.0.1 - 2019-07-24
 
 ### Changed
