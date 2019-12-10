@@ -121,6 +121,21 @@ class Server extends OffsiteGateway
             return $response;
         }
 
+        /** @var Gateway $gateway */
+        $gateway = $this->gateway();
+
+        /** @var ServerNotifyRequest $request */
+        $request = $gateway->acceptNotification();
+        $request->setTransactionReference($transaction->reference);
+
+        if (!$request->isValid()) {
+            $url = UrlHelper::siteUrl($transaction->getOrder()->cancelUrl);
+            Craft::warning('Notification request is not valid: '.json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
+            $request->invalid($url, 'Invalid signature');
+
+            exit();
+        }
+
         // Check to see if a successful purchase child transaction already exist and skip out early if they do
         $successfulPurchaseChildTransaction = TransactionRecord::find()->where([
             'parentId' => $transaction->id,
@@ -130,34 +145,14 @@ class Server extends OffsiteGateway
 
         if ($successfulPurchaseChildTransaction) {
             Craft::warning('Successful child transaction for “'.$transactionHash.'“ already exists.', 'commerce');
-            $response->data = 'ok';
+            $url = UrlHelper::actionUrl($transaction->getOrder()->cancelUrl, ['commerceTransactionId' => $transaction->id, 'commerceTransactionHash' => $transaction->hash]);
+            $request->confirm($url);
 
-            return $response;
+            exit();
         }
 
         $childTransaction = Commerce::getInstance()->getTransactions()->createTransaction(null, $transaction);
         $childTransaction->type = $transaction->type;
-
-        /** @var Gateway $gateway */
-        $gateway = $this->gateway();
-
-        /** @var ServerNotifyRequest $request */
-        $request = $gateway->acceptNotification();
-        $request->setTransactionReference($transaction->reference);
-
-        /** @var ServerNotifyResponse $gatewayResponse */
-        $gatewayResponse = $request->send();
-
-        if (!$request->isValid()) {
-            $url = UrlHelper::siteUrl($transaction->getOrder()->cancelUrl);
-            Craft::warning('Notification request is not valid: '.json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
-            $gatewayResponse->invalid($url, 'Invalid signature');
-            $response->data = 'ok';
-
-            return $response;
-        }
-
-        $request->getData();
 
         $status = $request->getTransactionStatus();
 
@@ -173,15 +168,15 @@ class Server extends OffsiteGateway
                 break;
         }
 
-        $childTransaction->response = $gatewayResponse->getData();
-        $childTransaction->code = $gatewayResponse->getCode();
-        $childTransaction->reference = $gatewayResponse->getTransactionReference();
-        $childTransaction->message = $gatewayResponse->getMessage();
+        $childTransaction->response = $request->getData();
+        $childTransaction->code = $request->getCode();
+        $childTransaction->reference = $request->getTransactionReference();
+        $childTransaction->message = $request->getMessage();
         Commerce::getInstance()->getTransactions()->saveTransaction($childTransaction);
 
         $url = UrlHelper::actionUrl('commerce/payments/complete-payment', ['commerceTransactionId' => $childTransaction->id, 'commerceTransactionHash' => $childTransaction->hash]);
 
-        $gatewayResponse->confirm($url);
+        $request->confirm($url);
 
         // As of `omnipay-sagepay` version 3.2.2, the `confirm` call above starts output, so prevent Yii from erroring out by trying to send headers or anything, really.
         exit();
@@ -235,4 +230,5 @@ class Server extends OffsiteGateway
     {
         return '\\'.Gateway::class;
     }
+
 }

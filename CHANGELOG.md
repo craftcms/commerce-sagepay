@@ -1,4 +1,9 @@
-# Release Notes for Sage Pay for Craft Commerce
+# Release Notes for SagePay for Craft Commerce
+
+## Unreleased
+
+### Fixed
+- Fixed webhook processing and response.
 
 ## 2.1.0.2 - 2019-11-08
 
