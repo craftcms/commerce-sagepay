@@ -145,7 +145,7 @@ class Server extends OffsiteGateway
 
         if ($successfulPurchaseChildTransaction) {
             Craft::warning('Successful child transaction for “'.$transactionHash.'“ already exists.', 'commerce');
-            $url = UrlHelper::actionUrl($transaction->getOrder()->cancelUrl, ['commerceTransactionId' => $transaction->id, 'commerceTransactionHash' => $transaction->hash]);
+            $url = UrlHelper::actionUrl($transaction->getOrder()->cancelUrl);
             $request->confirm($url);
 
             exit();
