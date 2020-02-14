@@ -1,6 +1,6 @@
 {
   "name": "craftcms/commerce-sagepay",
-  "description": "Sage Pay integration for Craft Commerce 2",
+  "description": "Sage Pay integration for Craft Commerce 2 & 3",
   "version": "2.1.0.3",
   "type": "craft-plugin",
   "keywords": [
