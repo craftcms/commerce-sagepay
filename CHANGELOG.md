@@ -1,5 +1,10 @@
 # Release Notes for SagePay for Craft Commerce
 
+## 2.1.1 - 2020-06-17
+
+### Added
+- Added `craft\commerce\sagepay\gateways\Server::getTransactionHashFromWebhook()` to support mutex lock when processing a webhook.
+
 ## 2.1.0.3 - 2019-12-11
 
 ### Fixed
