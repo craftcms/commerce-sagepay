@@ -27,10 +27,6 @@ use yii\base\NotSupportedException;
  */
 class Server extends OffsiteGateway
 {
-
-    // Properties
-    // =========================================================================
-
     /**
      * @var string
      */
@@ -61,9 +57,6 @@ class Server extends OffsiteGateway
      * @var bool Whether low profile form should be used.
      */
     public $useLowProfile = false;
-
-    // Public Methods
-    // =========================================================================
 
     /**
      * @inheritdoc
@@ -111,7 +104,7 @@ class Server extends OffsiteGateway
     {
         $response = Craft::$app->getResponse();
 
-        $transactionHash = Craft::$app->getRequest()->getParam('commerceTransactionHash');
+        $transactionHash = $this->getTransactionHashFromWebhook();
         $transaction = Commerce::getInstance()->getTransactions()->getTransactionByHash($transactionHash);
 
         if (!$transaction) {
@@ -198,14 +191,23 @@ class Server extends OffsiteGateway
         return true;
     }
 
+    /**
+     * @param array $request
+     * @param BasePaymentForm|null $paymentForm
+     */
     public function populateRequest(array &$request, BasePaymentForm $paymentForm = null)
     {
         parent::populateRequest($request, $paymentForm);
         $request['profile'] = $this->useLowProfile ? AbstractRequest::PROFILE_LOW : AbstractRequest::PROFILE_NORMAL;
     }
 
-    // Protected Methods
-    // =========================================================================
+    /**
+     * @inheritDoc
+     */
+    public function getTransactionHashFromWebhook()
+    {
+        return Craft::$app->getRequest()->getParam('commerceTransactionHash');
+    }
 
     /**
      * @inheritdoc
