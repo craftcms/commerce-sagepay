@@ -1,5 +1,11 @@
 # Release Notes for SagePay for Craft Commerce
 
+## 3.0.0 - 2021-04-20
+
+### Changed
+- The plugin now requires Craft 3.6 and Commerce 3.3 or later.
+- The plugin now requires Guzzle 7.
+
 ## 2.1.1 - 2020-06-17
 
 ### Added
