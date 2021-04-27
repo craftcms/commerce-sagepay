@@ -114,6 +114,8 @@ class Server extends OffsiteGateway
             return $response;
         }
 
+        // Get the mutex ready to release because this process can just exit the application
+        $mutex = Craft::$app->getMutex();
         /** @var Gateway $gateway */
         $gateway = $this->gateway();
 
@@ -126,21 +128,26 @@ class Server extends OffsiteGateway
             Craft::warning('Notification request is not valid: '.json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
             $request->invalid($url, 'Invalid signature');
 
+            $mutex->release('commerceTransaction:' . $transactionHash);
             exit();
         }
 
         // Check to see if a successful purchase child transaction already exist and skip out early if they do
-        $successfulPurchaseChildTransaction = TransactionRecord::find()->where([
+        /** @var TransactionRecord $successChildTransaction */
+        $successChildTransaction = TransactionRecord::find()->where([
             'parentId' => $transaction->id,
             'status' => TransactionRecord::STATUS_SUCCESS,
-            'type' => TransactionRecord::TYPE_PURCHASE,
+            'type' => [TransactionRecord::TYPE_PURCHASE, TransactionRecord::TYPE_AUTHORIZE],
         ])->one();
 
-        if ($successfulPurchaseChildTransaction) {
+        if ($successChildTransaction) {
             Craft::warning('Successful child transaction for “'.$transactionHash.'“ already exists.', 'commerce');
-            $url = UrlHelper::actionUrl($transaction->getOrder()->cancelUrl);
+            // At this point we could call `$transaction->getOrder()->updateOrderPaidInformation()` but SagePay is expecting
+            // a URL and we know complete payment will update the information.
+            $url = UrlHelper::actionUrl('commerce/payments/complete-payment', ['commerceTransactionId' => $successChildTransaction->id, 'commerceTransactionHash' => $successChildTransaction->hash]);
             $request->confirm($url);
 
+            $mutex->release('commerceTransaction:' . $transactionHash);
             exit();
         }
 
@@ -172,6 +179,7 @@ class Server extends OffsiteGateway
         $request->confirm($url);
 
         // As of `omnipay-sagepay` version 3.2.2, the `confirm` call above starts output, so prevent Yii from erroring out by trying to send headers or anything, really.
+        $mutex->release('commerceTransaction:' . $transactionHash);
         exit();
     }
 
