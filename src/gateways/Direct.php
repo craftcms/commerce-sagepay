@@ -20,9 +20,6 @@ use yii\base\NotSupportedException;
  */
 class Direct extends CreditCardGateway
 {
-    // Properties
-    // =========================================================================
-
     /**
      * @var string
      */
@@ -49,9 +46,6 @@ class Direct extends CreditCardGateway
      * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
      */
     public $useOldBasketFormat = false;
-
-    // Public Methods
-    // =========================================================================
 
     /**
      * @inheritdoc
@@ -99,9 +93,6 @@ class Direct extends CreditCardGateway
     {
         return false;
     }
-
-    // Protected Methods
-    // =========================================================================
 
     /**
      * @inheritdoc

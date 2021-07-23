@@ -21,9 +21,6 @@ use craft\db\Query;
  */
 class Install extends Migration
 {
-    // Public Methods
-    // =========================================================================
-
     /**
      * @inheritdoc
      */
@@ -42,9 +39,6 @@ class Install extends Migration
     {
         return true;
     }
-
-    // Private Methods
-    // =========================================================================
 
     /**
      * Converts any old school Sage Pay gateways to this one
@@ -90,6 +84,5 @@ class Install extends Migration
                 ->update('{{%commerce_gateways}}', $values, ['id' => $gateway['id']])
                 ->execute();
         }
-
     }
 }

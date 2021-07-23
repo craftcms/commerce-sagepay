@@ -17,9 +17,6 @@ use yii\base\Event;
  */
 class Plugin extends \craft\base\Plugin
 {
-    // Public Methods
-    // =========================================================================
-
     /**
      * @inheritdoc
      */
@@ -27,9 +24,13 @@ class Plugin extends \craft\base\Plugin
     {
         parent::init();
 
-        Event::on(Gateways::class, Gateways::EVENT_REGISTER_GATEWAY_TYPES,  function(RegisterComponentTypesEvent $event) {
-            $event->types[] = Direct::class;
-            $event->types[] = Server::class;
-        });
+        Event::on(
+            Gateways::class,
+            Gateways::EVENT_REGISTER_GATEWAY_TYPES,
+            function(RegisterComponentTypesEvent $event) {
+                $event->types[] = Direct::class;
+                $event->types[] = Server::class;
+            }
+        );
     }
 }

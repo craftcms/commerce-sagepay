@@ -1,45 +1,44 @@
 {% from "_includes/forms" import textField, lightswitchField, autosuggestField %}
 
 {{ lightswitchField({
-    label: "Should commerce send cart information to gateway when making transactions."|t('commerce'),
-    id: 'sendCartInfo',
-    name: 'sendCartInfo',
-    on: gateway.sendCartInfo,
-    errors: gateway.getErrors('sendCartInfo'),
+  label: "Should commerce send cart information to gateway when making transactions."|t('commerce'),
+  id: 'sendCartInfo',
+  name: 'sendCartInfo',
+  on: gateway.sendCartInfo,
+  errors: gateway.getErrors('sendCartInfo'),
 }) }}
 
 {{ autosuggestField({
-    label: 'Vendor'|t('commerce'),
-    id: 'vendor',
-    class: 'ltr',
-    name: 'vendor',
-    suggestEnvVars: true,
-    value: gateway.vendor,
-    errors: gateway.getErrors('vendor')
+  label: 'Vendor'|t('commerce'),
+  id: 'vendor',
+  class: 'ltr',
+  name: 'vendor',
+  suggestEnvVars: true,
+  value: gateway.vendor,
+  errors: gateway.getErrors('vendor')
 }) }}
 
- {{ lightswitchField({
-    label: "Test mode?"|t('commerce'),
-    name: 'testMode',
-    on: gateway.testMode,
-    errors: gateway.getErrors('testMode'),
- }) }}
+{{ lightswitchField({
+  label: "Test mode?"|t('commerce'),
+  name: 'testMode',
+  on: gateway.testMode,
+  errors: gateway.getErrors('testMode'),
+}) }}
 
- {{ autosuggestField({
-    label: "Referrer ID"|t('commerce'),
-    id: 'referrerId',
-    class: 'ltr',
-    name: 'referrerId',
-    suggestEnvVars: true,
-    value: gateway.referrerId,
-    errors: gateway.getErrors('referrerId')
- }) }}
+{{ autosuggestField({
+  label: "Referrer ID"|t('commerce'),
+  id: 'referrerId',
+  class: 'ltr',
+  name: 'referrerId',
+  suggestEnvVars: true,
+  value: gateway.referrerId,
+  errors: gateway.getErrors('referrerId')
+}) }}
 
- {{ lightswitchField({
-    label: "Use legacy basket format?"|t('commerce'),
-    instructions: 'Whether the <a href="https://github.com/thephpleague/omnipay-sagepay#basket-format" target="_blank">legacy basket format</a> should be used.'|t('commerce'),
-    name: 'useOldBasketFormat',
-    on: gateway.useOldBasketFormat,
-    errors: gateway.getErrors('useOldBasketFormat'),
- }) }}
-
+{{ lightswitchField({
+  label: "Use legacy basket format?"|t('commerce'),
+  instructions: 'Whether the <a href="https://github.com/thephpleague/omnipay-sagepay#basket-format" target="_blank">legacy basket format</a> should be used.'|t('commerce'),
+  name: 'useOldBasketFormat',
+  on: gateway.useOldBasketFormat,
+  errors: gateway.getErrors('useOldBasketFormat'),
+}) }}

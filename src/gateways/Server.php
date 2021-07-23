@@ -240,5 +240,4 @@ class Server extends OffsiteGateway
     {
         return '\\'.Gateway::class;
     }
-
 }
