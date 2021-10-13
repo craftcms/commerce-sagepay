@@ -12,7 +12,6 @@ use craft\commerce\records\Transaction as TransactionRecord;
 use craft\helpers\UrlHelper;
 use craft\web\Response as WebResponse;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Omnipay;
 use Omnipay\SagePay\Message\AbstractRequest;
 use Omnipay\SagePay\Message\ServerNotifyRequest;
 use Omnipay\SagePay\Message\ServerNotifyResponse;
@@ -24,39 +23,41 @@ use yii\base\NotSupportedException;
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
+ *
+ * @property-read null|string $settingsHtml
  */
 class Server extends OffsiteGateway
 {
     /**
-     * @var string
+     * @var string|null
      */
-    public $vendor;
+    public ?string $vendor = null;
 
     /**
      * @var bool
      */
-    public $testMode = false;
+    public bool $testMode = false;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public $referrerId;
+    public ?string $referrerId = null;
 
     /**
      * @var bool Whether cart information should be sent to the payment gateway
      */
-    public $sendCartInfo = false;
+    public bool $sendCartInfo = false;
 
     /**
      * @var bool Whether legacy basket format should be used.
      * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
      */
-    public $useOldBasketFormat = false;
+    public bool $useOldBasketFormat = false;
 
     /**
      * @var bool Whether low profile form should be used.
      */
-    public $useLowProfile = false;
+    public bool $useLowProfile = false;
 
     /**
      * @inheritdoc
@@ -69,7 +70,7 @@ class Server extends OffsiteGateway
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/serverGatewaySettings', ['gateway' => $this]);
     }
@@ -203,7 +204,7 @@ class Server extends OffsiteGateway
      * @param array $request
      * @param BasePaymentForm|null $paymentForm
      */
-    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null)
+    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null): void
     {
         parent::populateRequest($request, $paymentForm);
         $request['profile'] = $this->useLowProfile ? AbstractRequest::PROFILE_LOW : AbstractRequest::PROFILE_NORMAL;
@@ -212,7 +213,7 @@ class Server extends OffsiteGateway
     /**
      * @inheritDoc
      */
-    public function getTransactionHashFromWebhook()
+    public function getTransactionHashFromWebhook(): ?string
     {
         return Craft::$app->getRequest()->getParam('commerceTransactionHash');
     }
@@ -236,7 +237,7 @@ class Server extends OffsiteGateway
     /**
      * @inheritdoc
      */
-    protected function getGatewayClassName()
+    protected function getGatewayClassName(): ?string
     {
         return '\\'.Gateway::class;
     }

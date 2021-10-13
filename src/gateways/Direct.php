@@ -17,35 +17,37 @@ use yii\base\NotSupportedException;
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
+ *
+ * @property-read null|string $settingsHtml
  */
 class Direct extends CreditCardGateway
 {
     /**
-     * @var string
+     * @var string|null
      */
-    public $vendor;
+    public ?string $vendor = null;
 
     /**
      * @var bool
      */
-    public $testMode = false;
+    public bool $testMode = false;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public $referrerId;
+    public ?string $referrerId = null;
 
     /**
      * @var bool Whether cart information should be sent to the payment gateway
      */
-    public $sendCartInfo = false;
+    public bool $sendCartInfo = false;
 
 
     /**
      * @var bool Whether legacy basket format should be used.
      * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
      */
-    public $useOldBasketFormat = false;
+    public bool $useOldBasketFormat = false;
 
     /**
      * @inheritdoc
@@ -58,7 +60,7 @@ class Direct extends CreditCardGateway
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/directGatewaySettings', ['gateway' => $this]);
     }
@@ -113,7 +115,7 @@ class Direct extends CreditCardGateway
     /**
      * @inheritdoc
      */
-    protected function getGatewayClassName()
+    protected function getGatewayClassName(): ?string
     {
         return '\\'.Gateway::class;
     }
