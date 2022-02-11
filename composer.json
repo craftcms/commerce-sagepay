@@ -29,7 +29,7 @@
     "craftcms/cms": "^3.6",
     "craftcms/commerce": "^3.3",
     "craftcms/commerce-omnipay": "^3.0",
-    "omnipay/sagepay": "~3.0"
+    "omnipay/sagepay": "^4.0@dev"
   },
   "autoload": {
     "psr-4": {
