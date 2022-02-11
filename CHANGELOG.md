@@ -1,5 +1,11 @@
 # Release Notes for SagePay for Craft Commerce
 
+## Unreleased
+
+### Changed
+- The plugin now uses version `4.00` of the SagePay API.
+- The plugin now requires PHP 7.3 or later.
+
 ## 3.0.0 - 2021-04-20
 
 ### Changed

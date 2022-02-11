@@ -6,7 +6,7 @@ This plugin provides a [Sage Pay](https://www.sagepay.co.uk/) integration for [C
 
 ## Requirements
 
-This plugin requires Craft 3.6 and Craft Commerce 3.3 or later.
+This plugin requires Craft 3.6, Craft Commerce 3.3 and PHP 7.3 or later.
 
 ## Installation
 
