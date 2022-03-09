@@ -4,6 +4,8 @@
 
 This plugin provides a [Sage Pay](https://www.sagepay.co.uk/) integration for [Craft Commerce](https://craftcms.com/commerce).
 
+> **Tip:** This plugin uses protocol version `4.00` of the API for SagePay/Opayo.
+
 ## Requirements
 
 This plugin requires Craft 3.6, Craft Commerce 3.3 and PHP 7.3 or later.
