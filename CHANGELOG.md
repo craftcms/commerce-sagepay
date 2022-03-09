@@ -1,6 +1,6 @@
 # Release Notes for SagePay for Craft Commerce
 
-## Unreleased
+## 4.0.0 - 2022-03-09
 
 ### Changed
 - The plugin now uses version `4.00` of the SagePay API.
