@@ -133,7 +133,7 @@ class Server extends OffsiteGateway
         }
 
         // Check to see if a successful purchase child transaction already exist and skip out early if they do
-        /** @var TransactionRecord $successChildTransaction */
+        /** @var TransactionRecord|null $successChildTransaction */
         $successChildTransaction = TransactionRecord::find()->where([
             'parentId' => $transaction->id,
             'status' => TransactionRecord::STATUS_SUCCESS,

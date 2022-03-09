@@ -32,10 +32,16 @@
     "craftcms/commerce-omnipay": "^3.0",
     "omnipay/sagepay": "^4.0"
   },
+  "require-dev": {
+    "craftcms/phpstan": "dev-main"
+  },
   "autoload": {
     "psr-4": {
       "craft\\commerce\\sagepay\\": "src/"
     }
+  },
+  "scripts": {
+    "phpstan": "phpstan --memory-limit=1G"
   },
   "extra": {
     "name": "Sage Pay for Craft Commerce",
