@@ -4,6 +4,7 @@ namespace craft\commerce\sagepay\gateways;
 
 use Craft;
 use craft\commerce\base\RequestResponseInterface;
+use craft\commerce\models\payments\BasePaymentForm;
 use craft\commerce\models\Transaction;
 use craft\commerce\records\Transaction as TransactionRecord;
 use craft\commerce\omnipay\base\CreditCardGateway;
@@ -84,6 +85,17 @@ class Direct extends CreditCardGateway
         $refundRequest = $this->prepareRefundRequest($request, $reference);
 
         return $this->performRequest($refundRequest, $transaction);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null)
+    {
+        parent::populateRequest($request, $paymentForm);
+        if (isset($request['returnUrl'])) {
+            $request['ThreeDSNotificationURL'] = $request['returnUrl'];
+        }
     }
 
     /**

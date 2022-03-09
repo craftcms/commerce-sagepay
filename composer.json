@@ -26,10 +26,11 @@
     "rss": "https://github.com/craftcms/commerce-sagepay/commits/master.atom"
   },
   "require": {
+    "php": ">=7.3",
     "craftcms/cms": "^3.6",
     "craftcms/commerce": "^3.3",
     "craftcms/commerce-omnipay": "^3.0",
-    "omnipay/sagepay": "~3.0"
+    "omnipay/sagepay": "^4.0"
   },
   "autoload": {
     "psr-4": {
@@ -39,5 +40,11 @@
   "extra": {
     "name": "Sage Pay for Craft Commerce",
     "handle": "commerce-sagepay"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
   }
 }
