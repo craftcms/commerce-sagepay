@@ -33,6 +33,16 @@ composer require craftcms/commerce-sagepay
 ./craft install/plugin commerce-sagepay
 ```
 
+## Direct Integration
+
+### Testing 3D Secure with Direct integration
+
+It is worth noting that if you are using the direct integration and you are testing 3D Secure, you will need to make sure you are running your site with HTTPS.
+
+You must also have the Craft config option [sameSiteCookieValue](https://craftcms.com/docs/3.x/config/config-settings.html#samesitecookievalue) set to `'None'` in your general config.
+
+The plugin will soon be dropping support of the direct gateway due to the nature of its integration. This is mainly due to security concerns that we do not believe follow the current best practices when it comes to taking payments and payment gateways. 
+
 ## Setup
 
 To add a Sage Pay payment gateway, go to Commerce → Settings → Gateways, create a new gateway, and set the gateway type to either “Sage Pay Direct” or “Sage Pay Server”.
@@ -81,9 +91,3 @@ Event::on(BaseGateway::class, BaseGatewa::EVENT_AFTER_CREATE_ITEM_BAG, function(
     }
 });
 ```
-
-### Testing 3D Secure with Direct integration
-
-It is worth noting that if you are using the direct integration and you are testing 3D Secure, you will need to make sure you are running your site with HTTPS.
-
-You must also have the Craft config option [sameSiteCookieValue](https://craftcms.com/docs/3.x/config/config-settings.html#samesitecookievalue) set to `'None'` in your general config.
