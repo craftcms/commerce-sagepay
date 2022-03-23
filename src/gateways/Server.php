@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link https://craftcms.com/
+ * @copyright Copyright (c) Pixel & Tonic, Inc.
+ * @license MIT
+ */
 
 namespace craft\commerce\sagepay\gateways;
 
@@ -6,8 +11,8 @@ use Craft;
 use craft\commerce\base\RequestResponseInterface;
 use craft\commerce\models\payments\BasePaymentForm;
 use craft\commerce\models\Transaction;
-use craft\commerce\Plugin as Commerce;
 use craft\commerce\omnipay\base\OffsiteGateway;
+use craft\commerce\Plugin as Commerce;
 use craft\commerce\records\Transaction as TransactionRecord;
 use craft\helpers\UrlHelper;
 use craft\web\Response as WebResponse;
@@ -15,7 +20,6 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\Omnipay;
 use Omnipay\SagePay\Message\AbstractRequest;
 use Omnipay\SagePay\Message\ServerNotifyRequest;
-use Omnipay\SagePay\Message\ServerNotifyResponse;
 use Omnipay\SagePay\ServerGateway as Gateway;
 use yii\base\NotSupportedException;
 
@@ -84,7 +88,7 @@ class Server extends OffsiteGateway
         }
 
         $request = $this->createRequest($transaction);
-        $parent= $transaction->getParent();
+        $parent = $transaction->getParent();
 
         if ($parent->type == TransactionRecord::TYPE_CAPTURE) {
             $reference = $parent->getParent()->reference;
@@ -108,7 +112,7 @@ class Server extends OffsiteGateway
         $transaction = Commerce::getInstance()->getTransactions()->getTransactionByHash($transactionHash);
 
         if (!$transaction) {
-            Craft::warning('Transaction with the hash “'.$transactionHash.'“ not found.', 'sagepay');
+            Craft::warning('Transaction with the hash “' . $transactionHash . '“ not found.', 'sagepay');
             $response->data = 'ok';
 
             return $response;
@@ -125,7 +129,7 @@ class Server extends OffsiteGateway
 
         if (!$request->isValid()) {
             $url = UrlHelper::siteUrl($transaction->getOrder()->cancelUrl);
-            Craft::warning('Notification request is not valid: '.json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
+            Craft::warning('Notification request is not valid: ' . json_encode($request->getData(), JSON_PRETTY_PRINT), 'sagepay');
             $request->invalid($url, 'Invalid signature');
 
             $mutex->release('commerceTransaction:' . $transactionHash);
@@ -141,7 +145,7 @@ class Server extends OffsiteGateway
         ])->one();
 
         if ($successChildTransaction) {
-            Craft::warning('Successful child transaction for “'.$transactionHash.'“ already exists.', 'commerce');
+            Craft::warning('Successful child transaction for “' . $transactionHash . '“ already exists.', 'commerce');
             // At this point we could call `$transaction->getOrder()->updateOrderPaidInformation()` but SagePay is expecting
             // a URL and we know complete payment will update the information.
             $url = UrlHelper::actionUrl('commerce/payments/complete-payment', ['commerceTransactionId' => $successChildTransaction->id, 'commerceTransactionHash' => $successChildTransaction->hash]);
@@ -238,6 +242,6 @@ class Server extends OffsiteGateway
      */
     protected function getGatewayClassName()
     {
-        return '\\'.Gateway::class;
+        return '\\' . Gateway::class;
     }
 }

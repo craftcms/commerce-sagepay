@@ -1,13 +1,17 @@
 <?php
+/**
+ * @link https://craftcms.com/
+ * @copyright Copyright (c) Pixel & Tonic, Inc.
+ * @license MIT
+ */
 
 namespace craft\commerce\sagepay;
 
-use craft\commerce\sagepay\gateways\Server;
 use craft\commerce\sagepay\gateways\Direct;
+use craft\commerce\sagepay\gateways\Server;
 use craft\commerce\services\Gateways;
 use craft\events\RegisterComponentTypesEvent;
 use yii\base\Event;
-
 
 /**
  * Plugin represents the SagePay integration plugin.
