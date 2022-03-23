@@ -85,3 +85,5 @@ Event::on(BaseGateway::class, BaseGatewa::EVENT_AFTER_CREATE_ITEM_BAG, function(
 ### Testing 3D Secure with Direct integration
 
 It is worth noting that if you are using the direct integration and you are testing 3D Secure, you will need to make sure you are running your site with HTTPS.
+
+You must also have the Craft config option [sameSiteCookieValue](https://craftcms.com/docs/3.x/config/config-settings.html#samesitecookievalue) set to `'None'` in your general config.
