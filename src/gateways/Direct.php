@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link https://craftcms.com/
+ * @copyright Copyright (c) Pixel & Tonic, Inc.
+ * @license MIT
+ */
 
 namespace craft\commerce\sagepay\gateways;
 
@@ -6,8 +11,8 @@ use Craft;
 use craft\commerce\base\RequestResponseInterface;
 use craft\commerce\models\payments\BasePaymentForm;
 use craft\commerce\models\Transaction;
-use craft\commerce\records\Transaction as TransactionRecord;
 use craft\commerce\omnipay\base\CreditCardGateway;
+use craft\commerce\records\Transaction as TransactionRecord;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Omnipay;
 use Omnipay\SagePay\DirectGateway as Gateway;
@@ -76,7 +81,7 @@ class Direct extends CreditCardGateway
         }
 
         $request = $this->createRequest($transaction);
-        $parent= $transaction->getParent();
+        $parent = $transaction->getParent();
 
         if ($parent->type == TransactionRecord::TYPE_CAPTURE) {
             $reference = $parent->getParent()->reference;
@@ -129,6 +134,6 @@ class Direct extends CreditCardGateway
      */
     protected function getGatewayClassName(): ?string
     {
-        return '\\'.Gateway::class;
+        return '\\' . Gateway::class;
     }
 }

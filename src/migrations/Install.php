@@ -58,7 +58,6 @@ class Install extends Migration
         $dbConnection = Craft::$app->getDb();
 
         foreach ($gateways as $gateway) {
-
             $values = [
                 'type' => Direct::class,
             ];
@@ -77,7 +76,6 @@ class Install extends Migration
         $dbConnection = Craft::$app->getDb();
 
         foreach ($gateways as $gateway) {
-
             $values = [
                 'type' => Server::class,
             ];
