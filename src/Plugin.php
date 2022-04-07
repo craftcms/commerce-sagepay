@@ -7,7 +7,6 @@
 
 namespace craft\commerce\sagepay;
 
-use craft\commerce\sagepay\gateways\Direct;
 use craft\commerce\sagepay\gateways\Server;
 use craft\commerce\services\Gateways;
 use craft\events\RegisterComponentTypesEvent;

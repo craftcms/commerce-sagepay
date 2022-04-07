@@ -2,7 +2,6 @@
 
 namespace craft\commerce\sagepay\migrations;
 
-use Craft;
 use craft\db\Migration;
 use craft\db\Query;
 

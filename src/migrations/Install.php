@@ -8,7 +8,6 @@
 namespace craft\commerce\sagepay\migrations;
 
 use Craft;
-use craft\commerce\sagepay\gateways\Direct;
 use craft\commerce\sagepay\gateways\Server;
 use craft\db\Migration;
 use craft\db\Query;
