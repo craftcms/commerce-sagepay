@@ -51,24 +51,6 @@ class Install extends Migration
     {
         $gateways = (new Query())
             ->select(['id'])
-            ->where(['type' => 'craft\\commerce\\gateways\\SagePay_Direct'])
-            ->from(['{{%commerce_gateways}}'])
-            ->all();
-
-        $dbConnection = Craft::$app->getDb();
-
-        foreach ($gateways as $gateway) {
-            $values = [
-                'type' => Direct::class,
-            ];
-
-            $dbConnection->createCommand()
-                ->update('{{%commerce_gateways}}', $values, ['id' => $gateway['id']])
-                ->execute();
-        }
-
-        $gateways = (new Query())
-            ->select(['id'])
             ->where(['type' => 'craft\\commerce\\gateways\\SagePay_Server'])
             ->from(['{{%commerce_gateways}}'])
             ->all();

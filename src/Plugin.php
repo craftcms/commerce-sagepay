@@ -32,7 +32,6 @@ class Plugin extends \craft\base\Plugin
             Gateways::class,
             Gateways::EVENT_REGISTER_GATEWAY_TYPES,
             function(RegisterComponentTypesEvent $event) {
-                $event->types[] = Direct::class;
                 $event->types[] = Server::class;
             }
         );
