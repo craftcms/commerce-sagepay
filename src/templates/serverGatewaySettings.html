@@ -1,10 +1,11 @@
-{% from "_includes/forms" import textField, lightswitchField, autosuggestField %}
+{% from "_includes/forms" import textField, lightswitchField, autosuggestField, booleanMenuField %}
 
-{{ lightswitchField({
+{{ booleanMenuField({
   label: "Should commerce send cart information to gateway when making transactions."|t('commerce'),
   id: 'sendCartInfo',
   name: 'sendCartInfo',
-  on: gateway.sendCartInfo,
+  value: gateway.sendCartInfo(false),
+  includeEnvVars: true,
   errors: gateway.getErrors('sendCartInfo'),
 }) }}
 
@@ -14,14 +15,15 @@
   class: 'ltr',
   name: 'vendor',
   suggestEnvVars: true,
-  value: gateway.vendor,
+  value: gateway.getVendor(false),
   errors: gateway.getErrors('vendor')
 }) }}
 
-{{ lightswitchField({
+{{ booleanMenuField({
   label: "Test mode?"|t('commerce'),
   name: 'testMode',
-  on: gateway.testMode,
+  value: gateway.getTestMode(false),
+  includeEnvVars: true,
   errors: gateway.getErrors('testMode'),
 }) }}
 
@@ -31,22 +33,24 @@
   class: 'ltr',
   name: 'referrerId',
   suggestEnvVars: true,
-  value: gateway.referrerId,
+  value: gateway.getReferrerId(false),
   errors: gateway.getErrors('referrerId')
 }) }}
 
-{{ lightswitchField({
+{{ booleanMenuField({
   label: "Use legacy basket format?"|t('commerce'),
   instructions: 'Whether the <a href="https://github.com/thephpleague/omnipay-sagepay#basket-format" target="_blank">legacy basket format</a> should be used.'|t('commerce'),
   name: 'useOldBasketFormat',
-  on: gateway.useOldBasketFormat,
+  value: gateway.useOldBasketFormat,
+  includeEnvVars: true,
   errors: gateway.getErrors('useOldBasketFormat'),
 }) }}
 
-{{ lightswitchField({
+{{ booleanMenuField({
   label: "Use low profile payment form?"|t('commerce'),
   instructions: 'Whether the payment form should be optimised for inclusion as iframe.'|t('commerce'),
   name: 'useLowProfile',
-  on: gateway.useLowProfile,
+  value: gateway.getUseLowProfile(false),
+  includeEnvVars: true,
   errors: gateway.getErrors('useLowProfile'),
 }) }}

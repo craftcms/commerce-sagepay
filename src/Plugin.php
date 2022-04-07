@@ -24,6 +24,11 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
+    public string $schemaVersion = '2.0.0';
+
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -32,7 +37,6 @@ class Plugin extends \craft\base\Plugin
             Gateways::class,
             Gateways::EVENT_REGISTER_GATEWAY_TYPES,
             function(RegisterComponentTypesEvent $event) {
-                $event->types[] = Direct::class;
                 $event->types[] = Server::class;
             }
         );

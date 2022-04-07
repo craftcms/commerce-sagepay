@@ -14,10 +14,10 @@ use craft\commerce\models\Transaction;
 use craft\commerce\omnipay\base\OffsiteGateway;
 use craft\commerce\Plugin as Commerce;
 use craft\commerce\records\Transaction as TransactionRecord;
+use craft\helpers\App;
 use craft\helpers\UrlHelper;
 use craft\web\Response as WebResponse;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Omnipay;
 use Omnipay\SagePay\Message\AbstractRequest;
 use Omnipay\SagePay\Message\ServerNotifyRequest;
 use Omnipay\SagePay\ServerGateway as Gateway;
@@ -28,39 +28,42 @@ use yii\base\NotSupportedException;
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since     1.0
+ *
+ * @property bool $sendCartInfo
+ * @property bool $testMode
+ * @property bool $useLowProfile
+ * @property bool $useOldBasketFormat
+ * @property string $referrerId
+ * @property string $vendor
+ * @property-read null|string $settingsHtml
  */
 class Server extends OffsiteGateway
 {
     /**
-     * @var string
+     * @var string|null
      */
-    public $vendor;
+    private ?string $_vendor = null;
 
     /**
-     * @var bool
+     * @var bool|string
      */
-    public $testMode = false;
+    private bool|string $_testMode = false;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public $referrerId;
+    private ?string $_referrerId = null;
 
     /**
-     * @var bool Whether cart information should be sent to the payment gateway
-     */
-    public $sendCartInfo = false;
-
-    /**
-     * @var bool Whether legacy basket format should be used.
+     * @var bool|string Whether legacy basket format should be used.
      * @see https://github.com/thephpleague/omnipay-sagepay#basket-format
      */
-    public $useOldBasketFormat = false;
+    private bool|string $_useOldBasketFormat = false;
 
     /**
-     * @var bool Whether low profile form should be used.
+     * @var bool|string Whether low profile form should be used.
      */
-    public $useLowProfile = false;
+    private bool|string $_useLowProfile = false;
 
     /**
      * @inheritdoc
@@ -70,12 +73,123 @@ class Server extends OffsiteGateway
         return Craft::t('commerce', 'Sage Pay Server');
     }
 
+    public function getSettings(): array
+    {
+        $settings = parent::getSettings();
+        $settings['vendor'] = $this->getVendor(false);
+        $settings['testMode'] = $this->getTestMode(false);
+        $settings['referrerId'] = $this->getReferrerId(false);
+        $settings['useOldBasketFormat'] = $this->getUseOldBasketFormat(false);
+        $settings['useLowProfile'] = $this->getUseLowProfile(false);
+
+        return $settings;
+    }
+
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('commerce-sagepay/serverGatewaySettings', ['gateway' => $this]);
+    }
+
+    /**
+     * Returns whether Test Mode should be used.
+     *
+     * @param bool $parse Whether to parse the value as an environment variable
+     * @return bool|string
+     * @since 5.0.0
+     */
+    public function getTestMode(bool $parse = true): bool|string
+    {
+        return $parse ? App::parseBooleanEnv($this->_testMode) : $this->_testMode;
+    }
+
+    /**
+     * Sets whether Test Mode should be used.
+     *
+     * @param string|bool $testMode
+     * @since 5.0.0
+     */
+    public function setTestMode(bool|string $testMode): void
+    {
+        $this->_testMode = $testMode;
+    }
+
+    /**
+     * @param bool $parse Whether to parse the value as an environment variable
+     * @return bool|string
+     * @since 5.0.0
+     */
+    public function getUseLowProfile(bool $parse = true): bool|string
+    {
+        return $parse ? App::parseBooleanEnv($this->_useLowProfile) : $this->_useLowProfile;
+    }
+
+    /**
+     * @param string|bool $useLowProfile
+     * @since 5.0.0
+     */
+    public function setUseLowProfile(bool|string $useLowProfile): void
+    {
+        $this->_useLowProfile = $useLowProfile;
+    }
+
+    /**
+     * @param bool $parse Whether to parse the value as an environment variable
+     * @return bool|string
+     * @since 5.0.0
+     */
+    public function getUseOldBasketFormat(bool $parse = true): bool|string
+    {
+        return $parse ? App::parseBooleanEnv($this->_useOldBasketFormat) : $this->_useOldBasketFormat;
+    }
+
+    /**
+     * @param string|bool $useOldBasketFormat
+     * @since 5.0.0
+     */
+    public function setUseOldBasketFormat(bool|string $useOldBasketFormat): void
+    {
+        $this->_useOldBasketFormat = $useOldBasketFormat;
+    }
+
+    /**
+     * @param bool $parse Whether to parse the value as an environment variable
+     * @return ?string
+     * @since 5.0.0
+     */
+    public function getVendor(bool $parse = true): ?string
+    {
+        return $parse ? App::parseEnv($this->_vendor) : $this->_vendor;
+    }
+
+    /**
+     * @param ?string $vendor
+     * @since 5.0.0
+     */
+    public function setVendor(?string $vendor): void
+    {
+        $this->_vendor = $vendor;
+    }
+
+    /**
+     * @param bool $parse Whether to parse the value as an environment variable
+     * @return ?string
+     * @since 5.0.0
+     */
+    public function getReferrerId(bool $parse = true): ?string
+    {
+        return $parse ? App::parseEnv($this->_referrerId) : $this->_referrerId;
+    }
+
+    /**
+     * @param ?string $referrerId
+     * @since 5.0.0
+     */
+    public function setReferrerId(?string $referrerId): void
+    {
+        $this->_referrerId = $referrerId;
     }
 
     /**
@@ -207,16 +321,16 @@ class Server extends OffsiteGateway
      * @param array $request
      * @param BasePaymentForm|null $paymentForm
      */
-    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null)
+    public function populateRequest(array &$request, BasePaymentForm $paymentForm = null): void
     {
         parent::populateRequest($request, $paymentForm);
-        $request['profile'] = $this->useLowProfile ? AbstractRequest::PROFILE_LOW : AbstractRequest::PROFILE_NORMAL;
+        $request['profile'] = $this->getUseLowProfile() ? AbstractRequest::PROFILE_LOW : AbstractRequest::PROFILE_NORMAL;
     }
 
     /**
      * @inheritDoc
      */
-    public function getTransactionHashFromWebhook()
+    public function getTransactionHashFromWebhook(): ?string
     {
         return Craft::$app->getRequest()->getParam('commerceTransactionHash');
     }
@@ -229,10 +343,10 @@ class Server extends OffsiteGateway
         /** @var Gateway $gateway */
         $gateway = static::createOmnipayGateway($this->getGatewayClassName());
 
-        $gateway->setVendor(Craft::parseEnv($this->vendor));
-        $gateway->setReferrerId(Craft::parseEnv($this->referrerId));
-        $gateway->setTestMode($this->testMode);
-        $gateway->setUseOldBasketFormat($this->useOldBasketFormat);
+        $gateway->setVendor($this->getVendor());
+        $gateway->setReferrerId($this->getReferrerId());
+        $gateway->setTestMode($this->getTestMode());
+        $gateway->setUseOldBasketFormat($this->getUseOldBasketFormat());
 
         return $gateway;
     }
@@ -240,7 +354,7 @@ class Server extends OffsiteGateway
     /**
      * @inheritdoc
      */
-    protected function getGatewayClassName()
+    protected function getGatewayClassName(): ?string
     {
         return '\\' . Gateway::class;
     }

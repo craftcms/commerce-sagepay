@@ -12,6 +12,7 @@ use craft\commerce\sagepay\gateways\Direct;
 use craft\commerce\sagepay\gateways\Server;
 use craft\db\Migration;
 use craft\db\Query;
+use yii\db\Exception;
 
 /**
  * Installation Migration
@@ -44,27 +45,10 @@ class Install extends Migration
      * Converts any old school Sage Pay gateways to this one
      *
      * @return void
+     * @throws Exception
      */
-    private function _convertGateways()
+    private function _convertGateways(): void
     {
-        $gateways = (new Query())
-            ->select(['id'])
-            ->where(['type' => 'craft\\commerce\\gateways\\SagePay_Direct'])
-            ->from(['{{%commerce_gateways}}'])
-            ->all();
-
-        $dbConnection = Craft::$app->getDb();
-
-        foreach ($gateways as $gateway) {
-            $values = [
-                'type' => Direct::class,
-            ];
-
-            $dbConnection->createCommand()
-                ->update('{{%commerce_gateways}}', $values, ['id' => $gateway['id']])
-                ->execute();
-        }
-
         $gateways = (new Query())
             ->select(['id'])
             ->where(['type' => 'craft\\commerce\\gateways\\SagePay_Server'])

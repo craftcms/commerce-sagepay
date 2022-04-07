@@ -1,7 +1,6 @@
 {
   "name": "craftcms/commerce-sagepay",
-  "description": "Sage Pay integration for Craft Commerce 3.3+",
-  "version": "4.0.0",
+  "description": "Sage Pay integration for Craft Commerce 4.0+",
   "type": "craft-plugin",
   "keywords": [
     "sagepay",
@@ -26,10 +25,10 @@
     "rss": "https://github.com/craftcms/commerce-sagepay/commits/master.atom"
   },
   "require": {
-    "php": ">=7.3",
-    "craftcms/cms": "^3.6",
-    "craftcms/commerce": "^3.3",
-    "craftcms/commerce-omnipay": "^3.0",
+    "php": ">=8.0.2",
+    "craftcms/cms": "^4.0.0-beta.4",
+    "craftcms/commerce": "^4.0.0-beta.2",
+    "craftcms/commerce-omnipay": "^4.0.0-beta.2",
     "omnipay/sagepay": "^4.0"
   },
   "require-dev": {

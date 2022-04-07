@@ -1,5 +1,16 @@
 # Release Notes for SagePay for Craft Commerce
 
+## Unreleased
+
+### Added
+- Added Craft CMS 4 and Craft Commerce 4 compatibility.
+
+### Changed
+- SagePay Server gateway settings now support environment variables.
+
+### Removed
+- Removed SagePay Direct gateway.
+
 ## 4.0.0 - 2022-03-09
 
 ### Changed
