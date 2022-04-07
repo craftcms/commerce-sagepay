@@ -2,9 +2,9 @@ name: PHP Checks
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, 5.0 ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, 5.0 ]
 
 jobs:
   build:
