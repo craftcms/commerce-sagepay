@@ -34,8 +34,6 @@ class m220407_165206_remove_direct_gateway_references extends Migration
         $this->delete('{{%commerce_gateways}}', ['id' => $directGatewayIds]);
 
         return true;
-
-        return true;
     }
 
     /**
