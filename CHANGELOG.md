@@ -1,5 +1,10 @@
 # Release Notes for SagePay for Craft Commerce
 
+## 5.0.0-RC1 - 2022-05-04
+
+### Changed
+- SagePay for Craft Commerce now requires Craft Commerce 4.0.0-RC1 or later.
+
 ## 5.0.0-beta.1 - 2022-04-07
 
 ### Added
