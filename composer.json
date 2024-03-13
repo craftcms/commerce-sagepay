@@ -25,15 +25,16 @@
     "rss": "https://github.com/craftcms/commerce-sagepay/commits/master.atom"
   },
   "require": {
-    "php": "^8.0.2",
-    "craftcms/cms": "^4.0.0-RC3",
-    "craftcms/commerce": "^4.0.0-RC1",
-    "craftcms/commerce-omnipay": "^4.0.0-RC1",
+    "php": "^8.2",
+    "craftcms/cms": "^5.0.0-beta.6",
+    "craftcms/commerce": "^5.0.0-beta.1",
+    "craftcms/commerce-omnipay": "^5.0.0",
     "omnipay/sagepay": "^4.0"
   },
   "require-dev": {
     "craftcms/phpstan": "dev-main",
-    "craftcms/ecs": "dev-main"
+    "craftcms/ecs": "dev-main",
+    "craftcms/rector": "dev-main"
   },
   "autoload": {
     "psr-4": {
@@ -56,7 +57,7 @@
       "php-http/discovery": true
     },
     "platform": {
-      "php": "8.0.2"
+      "php": "8.2"
     }
   },
   "minimum-stability": "dev",
