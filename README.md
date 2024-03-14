@@ -8,7 +8,10 @@ This plugin provides a [Sage Pay](https://www.sagepay.co.uk/) integration for [C
 
 ## Requirements
 
-This plugin requires Craft 4.0 and Craft Commerce 4.0 or later.
+This plugin requires either: 
+
+- Craft 4.0 and Craft Commerce 4.0 or later
+- Craft 5.0 and Craft Commerce 5.0 or later
 
 ## Installation
 
