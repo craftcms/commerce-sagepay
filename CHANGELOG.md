@@ -1,6 +1,6 @@
 # Release Notes for SagePay for Craft Commerce
 
-## Unreleased
+## 5.1.0 - 2024-03-14
 
 - Added Craft CMS 5 and Craft Commerce 5 compatibility.
 
