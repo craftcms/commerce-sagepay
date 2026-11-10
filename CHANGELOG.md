@@ -1,5 +1,18 @@
 # Release Notes for SagePay for Craft Commerce
 
+## Unreleased
+
+> [!WARNING]
+> This release requires Craft Commerce 6. See [UPGRADE.md](UPGRADE.md) for the breaking changes.
+
+- Sage Pay for Craft Commerce now requires Craft CMS 6, Craft Commerce 6 and PHP 8.5.
+- The plugin now uses the Opayo Server and Shared protocol 4.00 directly, and no longer requires `craftcms/commerce-omnipay` or `omnipay/sagepay`.
+- Moved all classes to the `CraftCms\CommerceSagePay` namespace. `craft\commerce\sagepay\gateways\Server` is kept as an alias of `CraftCms\CommerceSagePay\Gateway`.
+- Added `CraftCms\CommerceSagePay\Events\PaymentRequestBuilding`, which replaces the Omnipay request events.
+- Added `CraftCms\CommerceSagePay\Events\BasketBuilding`, which replaces the Omnipay item bag event.
+- The webhook now also rejects notifications whose `VendorTxCode`, `VPSTxId` or `TxType` don’t match the transaction, and responds to notifications for unknown transactions with `Status=INVALID`.
+- The basket is no longer sent when the payment currency differs from the order currency.
+
 ## 5.1.0 - 2024-03-14
 
 - Added Craft CMS 5 and Craft Commerce 5 compatibility.
