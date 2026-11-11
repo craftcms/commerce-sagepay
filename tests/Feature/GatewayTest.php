@@ -580,7 +580,7 @@ it('doesn’t refund a transaction without an authorization number', function() 
 });
 
 it('matches the notification signature computed by the Omnipay driver', function() {
-    $notification = new CraftCms\CommerceSagePay\Data\Notification(sagePayNotification(['VPSSignature' => '2C0B52EB265A9A536BA13997C8AF0894']));
+    $notification = new CraftCms\CommerceSagePay\Data\Notification(sagePayNotification(['VPSSignature' => 'E962C6C319B4A54D1D9EF529EE1FE8F9']));
 
     expect($notification->hasValidSignature('CraftShop', SAGEPAY_SECURITY_KEY))->toBeTrue()
         ->and($notification->hasValidSignature('CraftShop', 'OTHERKEY12'))->toBeFalse()
