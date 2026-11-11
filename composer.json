@@ -1,14 +1,13 @@
 {
   "name": "craftcms/commerce-sagepay",
-  "description": "Sage Pay integration for Craft Commerce 4.0+/5.0+",
+  "description": "Sage Pay (Opayo) integration for Craft Commerce 6.0+",
   "type": "craft-plugin",
   "keywords": [
     "sagepay",
     "sage pay",
+    "opayo",
     "commerce",
-    "craftcms",
-    "omnipay",
-    "yii2"
+    "craftcms"
   ],
   "license": "MIT",
   "authors": [
@@ -22,41 +21,53 @@
     "issues": "https://github.com/craftcms/commerce-sagepay/issues?state=open",
     "source": "https://github.com/craftcms/commerce-sagepay",
     "docs": "https://github.com/craftcms/commerce-sagepay",
-    "rss": "https://github.com/craftcms/commerce-sagepay/commits/master.atom"
+    "rss": "https://github.com/craftcms/commerce-sagepay/commits/6.x.atom"
   },
   "require": {
-    "php": "^8.0.2",
-    "craftcms/cms": "^4.0.0-RC3|^5.0.0-beta.7",
-    "craftcms/commerce": "^4.0.0-RC1|^5.0.0-beta.1",
-    "craftcms/commerce-omnipay": "^4.1.0",
-    "omnipay/sagepay": "^4.0"
+    "php": "^8.5",
+    "ext-simplexml": "*",
+    "craftcms/commerce": "6.x-dev"
   },
   "require-dev": {
-    "craftcms/phpstan": "dev-main",
     "craftcms/ecs": "dev-main",
-    "craftcms/rector": "dev-main"
+    "larastan/larastan": "^3.4",
+    "orchestra/testbench": "^11.0",
+    "pestphp/pest": "^4.0",
+    "pestphp/pest-plugin-laravel": "^4.0"
   },
   "autoload": {
     "psr-4": {
-      "craft\\commerce\\sagepay\\": "src/"
+      "CraftCms\\CommerceSagePay\\": "src/",
+      "craft\\commerce\\sagepay\\": "legacy/"
     }
   },
-  "scripts": {
-    "phpstan": "phpstan --memory-limit=1G",
-    "check-cs": "ecs check --ansi",
-    "fix-cs": "ecs check --ansi --fix"
+  "autoload-dev": {
+    "psr-4": {
+      "CraftCms\\CommerceSagePay\\Tests\\": "tests/"
+    }
   },
   "extra": {
     "name": "Sage Pay for Craft Commerce",
-    "handle": "commerce-sagepay"
-  },
-  "config": {
-    "allow-plugins": {
-      "yiisoft/yii2-composer": true,
-      "craftcms/plugin-installer": true,
-      "php-http/discovery": true
-    }
+    "handle": "commerce-sagepay",
+    "developer": "Pixel & Tonic",
+    "documentationUrl": "https://github.com/craftcms/commerce-sagepay/blob/6.x/README.md",
+    "class": "CraftCms\\CommerceSagePay\\Plugin"
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G",
+    "test": "pest"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "craftcms/plugin-installer": true,
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true,
+      "yiisoft/yii2-composer": true
+    }
+  }
 }
