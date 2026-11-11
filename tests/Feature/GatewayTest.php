@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Http;
 
 const SAGEPAY_REGISTER_URL = 'https://live.opayo.eu.elavon.com/gateway/service/vspserver-register.vsp';
 const SAGEPAY_VPS_TX_ID = '{C0F3A1B2-3D4E-5F60-7182-93A4B5C6D7E8}';
-const SAGEPAY_SECURITY_KEY = 'NWY3ODUZXQ';
+const SAGEPAY_SECURITY_KEY = 'XXXXXXXXXX';
 
 function sagePayGateway(array $settings = []): Gateway
 {
